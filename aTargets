@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Targets for a 4.0</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700&display=swap">
+<style>
+:root{
+  color-scheme: light;
+  --bg:#F4F5F8; --card:#FFFFFF; --ink:#151A2D; --muted:#586078; --line:#DCE0EA; --soft:#ECEEF4;
+  --chem:#0B7A66; --chem-bg:#E2F3EE;
+  --phys:#3E3FC4; --phys-bg:#E8E8FA;
+  --music:#B02F7A; --music-bg:#F9E6F1;
+  --py:#9A5B00; --py-bg:#FAEFD9;
+  --bad:#B3261E; --good:#17723A;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --bg:#0E1120; --card:#171B2E; --ink:#EEF0F8; --muted:#A3AAC2; --line:#2A3050; --soft:#1F2440;
+    --chem:#4FD1B6; --chem-bg:#12332D;
+    --phys:#A3A4FF; --phys-bg:#25264F;
+    --music:#F28CC4; --music-bg:#40203A;
+    --py:#F0B454; --py-bg:#3D2E10;
+    --bad:#FF8A80; --good:#7EDC9E;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --bg:#0E1120; --card:#171B2E; --ink:#EEF0F8; --muted:#A3AAC2; --line:#2A3050; --soft:#1F2440;
+  --chem:#4FD1B6; --chem-bg:#12332D;
+  --phys:#A3A4FF; --phys-bg:#25264F;
+  --music:#F28CC4; --music-bg:#40203A;
+  --py:#F0B454; --py-bg:#3D2E10;
+  --bad:#FF8A80; --good:#7EDC9E;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);}
+*,*::before,*::after{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Schibsted Grotesk",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:16px;line-height:1.55;font-variant-numeric:tabular-nums;}
+.wrap{max-width:1040px;margin:0 auto;padding:40px 20px 72px;}
+h1{font-size:clamp(34px,6vw,56px);line-height:1.04;margin:0 0 12px;font-weight:700;letter-spacing:-0.02em;}
+h2{font-size:26px;line-height:1.15;margin:0;font-weight:700;letter-spacing:-0.01em;}
+h3{font-size:17px;margin:0 0 10px;font-weight:500;}
+p{margin:0;}
+.lede{max-width:62ch;color:var(--muted);font-size:18px;}
+.jump{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 0;padding:0;list-style:none;}
+.jump a{display:inline-block;padding:7px 14px;border-radius:999px;text-decoration:none;font-weight:500;font-size:14px;border:1px solid var(--line);color:var(--ink);background:var(--card);}
+.jump a:hover{border-color:var(--ink);}
+a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--phys);outline-offset:2px;}
+.block{margin-top:44px;}
+.sectionhead{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 16px;margin-bottom:14px;}
+.sub{color:var(--muted);font-size:15px;}
+.timeline{list-style:none;margin:0;padding:0;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;}
+.timeline li{display:grid;grid-template-columns:96px 1fr auto;gap:6px 16px;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line);}
+.timeline li:last-child{border-bottom:0;}
+.timeline li.today{background:var(--soft);}
+.date b{display:block;font-weight:700;font-size:15px;line-height:1.2;}
+.date span{font-size:13px;color:var(--muted);}
+.what{min-width:0;}
+.what strong{font-weight:500;display:block;}
+.what small{color:var(--muted);font-size:13.5px;display:block;}
+.chip{display:inline-block;font-size:12.5px;font-weight:500;padding:1px 9px;border-radius:999px;margin-right:8px;vertical-align:1px;}
+.c-chem{color:var(--chem);background:var(--chem-bg);}
+.c-phys{color:var(--phys);background:var(--phys-bg);}
+.c-music{color:var(--music);background:var(--music-bg);}
+.c-py{color:var(--py);background:var(--py-bg);}
+.aim{font-size:30px;font-weight:700;line-height:1;text-align:right;letter-spacing:-0.02em;}
+.aim small{display:block;font-size:12px;font-weight:400;color:var(--muted);letter-spacing:0;margin-top:3px;}
+.aim.word{font-size:18px;font-weight:500;}
+.course{margin-top:56px;padding-top:22px;border-top:4px solid var(--accent);--accent:var(--chem);--accent-bg:var(--chem-bg);}
+.course.phys{--accent:var(--phys);--accent-bg:var(--phys-bg);}
+.course.music{--accent:var(--music);--accent-bg:var(--music-bg);}
+.course.py{--accent:var(--py);--accent-bg:var(--py-bg);}
+.course h2{color:var(--accent);}
+.standing{margin:8px 0 18px;max-width:68ch;font-size:17px;}
+.grid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:20px;align-items:start;}
+.tablebox{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:15px;min-width:520px;}
+th{text-align:left;font-weight:500;font-size:13.5px;color:var(--muted);padding:12px 16px 8px;border-bottom:1px solid var(--line);}
+td{padding:11px 16px;border-bottom:1px solid var(--line);vertical-align:top;}
+tr:last-child td{border-bottom:0;}
+td.num,th.num{text-align:right;white-space:nowrap;}
+.tablebox td:first-child{white-space:nowrap;}
+td .note{display:block;color:var(--muted);font-size:13.5px;}
+td.target{font-weight:700;font-size:18px;color:var(--accent);}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;}
+.panel + .panel{margin-top:16px;}
+.field{display:block;margin-bottom:12px;}
+.field span{display:block;font-size:14px;color:var(--muted);margin-bottom:4px;}
+input[type=number],select{width:100%;font:inherit;font-size:16px;padding:9px 11px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);}
+.check{display:flex;align-items:center;gap:8px;margin-bottom:12px;font-size:15px;}
+.check input{width:18px;height:18px;accent-color:var(--accent);}
+.result{display:block;margin-top:6px;padding:14px;border-radius:10px;background:var(--accent-bg);}
+.result .big{display:block;font-size:40px;font-weight:700;line-height:1;color:var(--accent);letter-spacing:-0.02em;}
+.result .big.no{color:var(--bad);font-size:26px;}
+.result .big.ok{color:var(--good);font-size:26px;}
+.result .cap{display:block;margin-top:6px;font-size:14px;color:var(--ink);}
+.err{color:var(--bad);font-size:14px;margin-top:4px;min-height:1px;}
+.mini{width:100%;min-width:0;font-size:15px;}
+.mini th,.mini td{padding:8px 4px;border-bottom:1px solid var(--line);}
+.mini td:last-child,.mini th:last-child{text-align:right;}
+.mini tr:last-child td{border-bottom:0;}
+.mini .out{color:var(--bad);font-weight:500;}
+.fine{margin-top:14px;font-size:14px;color:var(--muted);max-width:76ch;}
+footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:14px;max-width:76ch;}
+@media (max-width:860px){
+  .grid{grid-template-columns:1fr;}
+}
+@media (max-width:560px){
+  .wrap{padding:28px 14px 56px;}
+  .timeline li{grid-template-columns:70px 1fr auto;gap:4px 10px;padding:12px 12px;}
+  .aim{font-size:24px;}
+}
+ 
+.toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin-top:20px;}
+.btn{font:inherit;font-size:14px;font-weight:500;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;}
+.btn:hover{border-color:var(--ink);}
+.btn:focus-visible{outline:3px solid var(--phys);outline-offset:2px;}
+.status{font-size:14px;color:var(--muted);}
+td input.score{width:84px;padding:6px 8px;font-size:15px;text-align:right;}
+td input.score::placeholder{color:var(--muted);opacity:.8;}
+input.invalid{border-color:var(--bad);box-shadow:0 0 0 1px var(--bad);}
+td.target.done{color:var(--muted);font-weight:500;font-size:15px;}
+td.target.out{color:var(--bad);font-size:15px;}
+td.target.ok{color:var(--good);font-size:15px;}
+.timeline li.past .what,.timeline li.past .date{opacity:.6;}
+.aim.scored{color:var(--good);}
+.aim a{font-size:14px;font-weight:500;color:var(--accent-link,var(--phys));}
+.aim.out{color:var(--bad);font-size:18px;}
+.hint{font-size:14px;color:var(--muted);margin:0 0 12px;}
+[hidden]{display:none !important;}
+.course.gpa{--accent:var(--ink);--accent-bg:var(--soft);}
+#gpa table{min-width:440px;}
+#gpa td{padding:11px 10px;}
+#gpa td input.score{width:68px;}
+td.letter{font-weight:700;font-size:18px;line-height:1.2;}
+td.letter .note{font-weight:400;}
+td.letter.a{color:var(--good);}
+.scale{display:flex;flex-wrap:wrap;gap:6px 14px;margin:14px 0 0;padding:0;list-style:none;font-size:14px;color:var(--muted);}
+.scale b{color:var(--ink);font-weight:500;}
+@media (prefers-reduced-motion:no-preference){ .result .big{transition:color .2s;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+ 
+<header>
+  <h1>Targets for a 4.0</h1>
+  <p class="lede">What to score on every assignment still ahead, so each of your four courses finishes at 95 or higher. Type each grade into the “Your score” column as it comes back, and every target on the page updates.</p>
+  <div class="toolbar">
+    <button type="button" class="btn" id="reset">Reset to the Nov 3 grades</button>
+    <span class="status" id="status" aria-live="polite">Your scores are saved in this browser.</span>
+  </div>
+  <ul class="jump">
+    <li><a href="#soon">Coming up</a></li>
+    <li><a href="#chem">Chemistry</a></li>
+    <li><a href="#phys">Physics</a></li>
+    <li><a href="#music">Greek music</a></li>
+    <li><a href="#py">Python</a></li>
+    <li><a href="#gpa">GPA</a></li>
+  </ul>
+</header>
+ 
+<section class="block" id="soon">
+  <div class="sectionhead">
+    <h2>Coming up</h2>
+    <p class="sub">The number on the right is the lowest score that keeps a 95 realistic. Past items stay here until you add your score.</p>
+  </div>
+  <ol class="timeline">
+    <li data-date="2026-11-03" data-course="music" data-score="m-zorba">
+      <div class="date"><b>Tue Nov 3</b><span>due</span></div>
+      <div class="what"><strong><span class="chip c-music">Music</span>Zorba the Greek paper</strong></div>
+      <div class="aim"></div>
+    </li>
+    <li data-date="2026-11-04" data-course="chem" data-score="c-hw5">
+      <div class="date"><b>Wed Nov 4</b><span>10 PM</span></div>
+      <div class="what"><strong><span class="chip c-chem">Chem</span>Homework 5</strong></div>
+      <div class="aim"></div>
+    </li>
+    <li data-date="2026-11-05" data-course="phys" data-score="p-mid">
+      <div class="date"><b>Thu Nov 5</b><span>in class</span></div>
+      <div class="what"><strong><span class="chip c-phys">Physics</span>Midterm 1</strong></div>
+      <div class="aim"></div>
+    </li>
+    <li data-date="2026-11-11" data-course="chem" data-score="c-hw6">
+      <div class="date"><b>Wed Nov 11</b><span>by 10 PM</span></div>
+      <div class="what"><strong><span class="chip c-chem">Chem</span>Homework 6</strong><small>Late homework loses 5% per day</small></div>
+      <div class="aim"></div>
+    </li>
+    <li data-date="2026-11-15" data-course="phys" data-avg="p-hw">
+      <div class="date"><b>Sun Nov 15</b><span>midnight</span></div>
+      <div class="what"><strong><span class="chip c-phys">Physics</span>Mastering homework</strong></div>
+      <div class="aim">100</div>
+    </li>
+    <li data-date="2026-11-16" data-course="py" data-score="y-quiz2">
+      <div class="date"><b>Mon Nov 16</b><span>in class</span></div>
+      <div class="what"><strong><span class="chip c-py">Python</span>Quiz 2</strong><small>Red: no AI at all</small></div>
+      <div class="aim"></div>
+    </li>
+    <li data-date="2026-11-16" data-course="phys" data-avg="p-quiz">
+      <div class="date"><b>Mon Nov 16</b><span>start of class</span></div>
+      <div class="what"><strong><span class="chip c-phys">Physics</span>Weekly quiz, if scheduled</strong></div>
+      <div class="aim">100</div>
+    </li>
+    <li data-date="2026-11-18" data-course="chem" data-score="c-m2">
+      <div class="date"><b>Wed Nov 18</b><span>in class</span></div>
+      <div class="what"><strong><span class="chip c-chem">Chem</span>Midterm 2, chapters 8, 10, 12 to 14</strong><small>Homework 7 is due the same day; finish it by Nov 16</small></div>
+      <div class="aim"></div>
+    </li>
+    <li data-date="2026-11-18" data-course="chem" data-score="c-hw7">
+      <div class="date"><b>Wed Nov 18</b><span>10 PM</span></div>
+      <div class="what"><strong><span class="chip c-chem">Chem</span>Homework 7</strong></div>
+      <div class="aim"></div>
+    </li>
+    <li data-date="2026-11-22" data-course="phys" data-avg="p-hw">
+      <div class="date"><b>Sun Nov 22</b><span>midnight</span></div>
+      <div class="what"><strong><span class="chip c-phys">Physics</span>Mastering homework</strong></div>
+      <div class="aim">100</div>
+    </li>
+    <li data-date="2026-11-23" data-course="phys" data-avg="p-quiz">
+      <div class="date"><b>Mon Nov 23</b><span>start of class</span></div>
+      <div class="what"><strong><span class="chip c-phys">Physics</span>Weekly quiz, if scheduled</strong></div>
+      <div class="aim">100</div>
+    </li>
+    <li data-date="2026-11-25" data-course="chem" data-score="c-hw8">
+      <div class="date"><b>Wed Nov 25</b><span>10 PM</span></div>
+      <div class="what"><strong><span class="chip c-chem">Chem</span>Homework 8</strong></div>
+      <div class="aim"></div>
+    </li>
+    <li data-date="2026-11-29" data-course="phys" data-avg="p-hw">
+      <div class="date"><b>Sun Nov 29</b><span>midnight</span></div>
+      <div class="what"><strong><span class="chip c-phys">Physics</span>Mastering homework</strong></div>
+      <div class="aim">100</div>
+    </li>
+    <li data-date="2026-11-30" data-course="phys" data-avg="p-quiz">
+      <div class="date"><b>Mon Nov 30</b><span>start of class</span></div>
+      <div class="what"><strong><span class="chip c-phys">Physics</span>Weekly quiz, if scheduled</strong></div>
+      <div class="aim">100</div>
+    </li>
+    <li data-date="2026-12-02" data-course="chem" data-score="c-hw9">
+      <div class="date"><b>Wed Dec 2</b><span>10 PM</span></div>
+      <div class="what"><strong><span class="chip c-chem">Chem</span>Homework 9</strong></div>
+      <div class="aim"></div>
+    </li>
+    <li data-date="2026-12-04" data-course="phys" data-score="p-mid2">
+      <div class="date"><b>Fri Dec 4</b><span>in class</span></div>
+      <div class="what"><strong><span class="chip c-phys">Physics</span>Midterm 2</strong></div>
+      <div class="aim"></div>
+    </li>
+    <li data-date="2026-12-10" data-course="py" data-score="y-exam">
+      <div class="date"><b>Thu Dec 10</b><span>13:00 to 15:00</span></div>
+      <div class="what"><strong><span class="chip c-py">Python</span>Final exam, LAB7</strong><small>Section K with Viktoratos. Red: no AI at all. Your chem final is the same afternoon</small></div>
+      <div class="aim"></div>
+    </li>
+    <li data-date="2026-12-10" data-course="chem" data-score="c-final">
+      <div class="date"><b>Thu Dec 10</b><span>16:00 to 18:00</span></div>
+      <div class="what"><strong><span class="chip c-chem">Chem</span>Final exam, cumulative</strong><small>W105 for sections K and N, W102 for L. Replaces your lower midterm if it’s higher</small></div>
+      <div class="aim"></div>
+    </li>
+    <li data-date="2026-12-11" data-course="phys" data-score="p-final">
+      <div class="date"><b>Fri Dec 11</b><span>13:00 to 15:00</span></div>
+      <div class="what"><strong><span class="chip c-phys">Physics</span>Final exam</strong><small>W104 for section K, W105 for L</small></div>
+      <div class="aim"></div>
+    </li>
+  </ol>
+  <p class="fine">Not yet dated: the Greek music research paper and blog, and the Python final project. Greek music has no final exam on the schedule. Ask each instructor for the exact deadlines.</p>
+</section>
+ 
+<section class="course chem" id="chem">
+  <h2>Chemistry 117</h2>
+  <p class="standing" id="c-standing"></p>
+  <div class="grid">
+    <div>
+      <div class="tablebox"><table><thead><tr><th>When</th><th>Assignment</th><th class="num">Worth</th><th class="num">Your score</th><th class="num">Aim for</th></tr></thead><tbody>
+<tr><td>Done</td><td>Homework 1</td><td class="num">1.9 pts</td><td class="num"><input class="score" type="number" id="c-hw1" data-name="Homework 1" data-default="92" min="0" max="100" step="0.1" inputmode="decimal" aria-label="Homework 1 score"></td><td class="num target" id="aim-c-hw1"></td></tr>
+<tr><td>Done</td><td>Homework 2</td><td class="num">1.9 pts</td><td class="num"><input class="score" type="number" id="c-hw2" data-name="Homework 2" data-default="98" min="0" max="100" step="0.1" inputmode="decimal" aria-label="Homework 2 score"></td><td class="num target" id="aim-c-hw2"></td></tr>
+<tr><td>Done</td><td>Homework 3</td><td class="num">1.9 pts</td><td class="num"><input class="score" type="number" id="c-hw3" data-name="Homework 3" data-default="100" min="0" max="100" step="0.1" inputmode="decimal" aria-label="Homework 3 score"></td><td class="num target" id="aim-c-hw3"></td></tr>
+<tr><td>Done</td><td>Homework 4</td><td class="num">1.9 pts</td><td class="num"><input class="score" type="number" id="c-hw4" data-name="Homework 4" data-default="100" min="0" max="100" step="0.1" inputmode="decimal" aria-label="Homework 4 score"></td><td class="num target" id="aim-c-hw4"></td></tr>
+<tr><td>Mon Oct 19</td><td>Midterm 1<span class="note">Chapters 3 to 7</span></td><td class="num">25 pts</td><td class="num"><input class="score" type="number" id="c-m1" data-name="Midterm 1" data-default="76" min="0" max="100" step="0.1" inputmode="decimal" aria-label="Midterm 1 score"></td><td class="num target" id="aim-c-m1"></td></tr>
+<tr><td>Wed Nov 4</td><td>Homework 5</td><td class="num">1.9 pts</td><td class="num"><input class="score" type="number" id="c-hw5" data-name="Homework 5" placeholder="–" min="0" max="100" step="0.1" inputmode="decimal" aria-label="Homework 5 score"></td><td class="num target" id="aim-c-hw5"></td></tr>
+<tr><td>Wed Nov 11</td><td>Homework 6<span class="note">Due 10 PM</span></td><td class="num">1.9 pts</td><td class="num"><input class="score" type="number" id="c-hw6" data-name="Homework 6" placeholder="–" min="0" max="100" step="0.1" inputmode="decimal" aria-label="Homework 6 score"></td><td class="num target" id="aim-c-hw6"></td></tr>
+<tr><td>Wed Nov 18</td><td>Homework 7<span class="note">Same day as Midterm 2</span></td><td class="num">1.9 pts</td><td class="num"><input class="score" type="number" id="c-hw7" data-name="Homework 7" placeholder="–" min="0" max="100" step="0.1" inputmode="decimal" aria-label="Homework 7 score"></td><td class="num target" id="aim-c-hw7"></td></tr>
+<tr><td>Wed Nov 18</td><td>Midterm 2<span class="note">Chapters 8, 10, 12, 13, 14</span></td><td class="num">25 pts</td><td class="num"><input class="score" type="number" id="c-m2" data-name="Midterm 2" placeholder="–" min="0" max="100" step="0.1" inputmode="decimal" aria-label="Midterm 2 score"></td><td class="num target" id="aim-c-m2"></td></tr>
+<tr><td>Wed Nov 25</td><td>Homework 8</td><td class="num">1.9 pts</td><td class="num"><input class="score" type="number" id="c-hw8" data-name="Homework 8" placeholder="–" min="0" max="100" step="0.1" inputmode="decimal" aria-label="Homework 8 score"></td><td class="num target" id="aim-c-hw8"></td></tr>
+<tr><td>Wed Dec 2</td><td>Homework 9</td><td class="num">1.9 pts</td><td class="num"><input class="score" type="number" id="c-hw9" data-name="Homework 9" placeholder="–" min="0" max="100" step="0.1" inputmode="decimal" aria-label="Homework 9 score"></td><td class="num target" id="aim-c-hw9"></td></tr>
+<tr><td>Thu Dec 10</td><td>Final exam<span class="note">16:00 to 18:00. Cumulative. Also replaces your lower midterm if it’s higher</span></td><td class="num">33 pts</td><td class="num"><input class="score" type="number" id="c-final" data-name="Final exam" placeholder="–" min="0" max="100" step="0.1" inputmode="decimal" aria-label="Final exam score"></td><td class="num target" id="aim-c-final"></td></tr>
+</tbody></table></div>
+      <p class="fine">Homework you haven’t scored yet is assumed to be 100. The syllabus says 10 homeworks but the schedule lists 9, so this uses 9. Late homework loses 5% per day, and there are no make-up exams.</p>
+    </div>
+    <div>
+      <div class="panel">
+        <h3>Where you stand</h3>
+        
+        <output class="result" id="c-out" aria-live="polite"></output>
+      </div>
+      <div class="panel" id="c-scen-panel">
+        <h3 id="c-scen-title">What you need next</h3>
+        <table class="mini">
+          <thead><tr><th id="c-scen-h1"></th><th id="c-scen-h2"></th></tr></thead>
+          <tbody id="c-scen"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<section class="course phys" id="phys">
+  <h2>Physics 120</h2>
+  <p class="standing" id="p-standing"></p>
+  <div class="grid">
+    <div>
+      <div class="tablebox"><table><thead><tr><th>When</th><th>Assignment</th><th class="num">Worth</th><th class="num">Your score</th><th class="num">Aim for</th></tr></thead><tbody>
+<tr><td>Every Sunday</td><td>Mastering homework<span class="note">Your average so far; update it from Mastering</span></td><td class="num">10 pts</td><td class="num"><input class="score" type="number" id="p-hw" data-name="Mastering homework" data-default="95" min="0" max="150" step="0.1" inputmode="decimal" aria-label="Mastering homework score"></td><td class="num target">100</td></tr>
+<tr><td>Mondays</td><td>Quizzes, 6 to 7 in total<span class="note">Your average so far, extra credit included</span></td><td class="num">20 pts</td><td class="num"><input class="score" type="number" id="p-quiz" data-name="Quizzes, 6 to 7 in total" data-default="115" min="0" max="150" step="0.1" inputmode="decimal" aria-label="Quizzes, 6 to 7 in total score"></td><td class="num target">100</td></tr>
+<tr><td>As announced</td><td>Lab reports and attendance<span class="note">Your average so far. Max 2 absences or you fail the lab. Blank counts as 95</span></td><td class="num">20 pts</td><td class="num"><input class="score" type="number" id="p-lab" data-name="Lab reports and attendance" placeholder="–" min="0" max="100" step="0.1" inputmode="decimal" aria-label="Lab reports and attendance score"></td><td class="num target">95+</td></tr>
+<tr><td>Thu Nov 5</td><td>Midterm 1</td><td class="num">15 pts</td><td class="num"><input class="score" type="number" id="p-mid" data-name="Midterm 1" placeholder="–" min="0" max="100" step="0.1" inputmode="decimal" aria-label="Midterm 1 score"></td><td class="num target" id="aim-p-mid"></td></tr>
+<tr><td>Fri Dec 4</td><td>Midterm 2</td><td class="num">15 pts</td><td class="num"><input class="score" type="number" id="p-mid2" data-name="Midterm 2" placeholder="–" min="0" max="100" step="0.1" inputmode="decimal" aria-label="Midterm 2 score"></td><td class="num target" id="aim-p-mid2"></td></tr>
+<tr><td>Fri Dec 11</td><td>Final exam<span class="note">13:00 to 15:00</span></td><td class="num">20 pts</td><td class="num"><input class="score" type="number" id="p-final" data-name="Final exam" placeholder="–" min="0" max="100" step="0.1" inputmode="decimal" aria-label="Final exam score"></td><td class="num target" id="aim-p-final"></td></tr>
+</tbody></table></div>
+      <p class="fine">Two midterms at 15% each, per the syllabus and your dates. Confirm with Professor Lykartsi whether quiz extra credit counts above 100.</p>
+    </div>
+    <div>
+      <div class="panel">
+        <h3>Where you stand</h3>
+        <label class="check"><input type="checkbox" id="p-cap" data-default="1">Cap quiz extra credit at 100 (the cautious case)</label>
+        <output class="result" id="p-out" aria-live="polite"></output>
+      </div>
+      <div class="panel" id="p-scen-panel">
+        <h3 id="p-scen-title">What you need next</h3>
+        <table class="mini">
+          <thead><tr><th id="p-scen-h1"></th><th id="p-scen-h2"></th></tr></thead>
+          <tbody id="p-scen"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<section class="course music" id="music">
+  <h2>Greek Music 120</h2>
+  <p class="standing" id="m-standing"></p>
+  <div class="grid">
+    <div>
+      <div class="tablebox"><table><thead><tr><th>When</th><th>Assignment</th><th class="num">Worth</th><th class="num">Your score</th><th class="num">Aim for</th></tr></thead><tbody>
+<tr><td>Done</td><td>Improvised interview</td><td class="num">20 pts</td><td class="num"><input class="score" type="number" id="m-int" data-name="Improvised interview" data-default="87" min="0" max="100" step="0.1" inputmode="decimal" aria-label="Improvised interview score"></td><td class="num target" id="aim-m-int"></td></tr>
+<tr><td>Done</td><td>Never on Sundays paper</td><td class="num">20 pts</td><td class="num"><input class="score" type="number" id="m-nos" data-name="Never on Sundays paper" placeholder="–" min="0" max="100" step="0.1" inputmode="decimal" aria-label="Never on Sundays paper score"></td><td class="num target" id="aim-m-nos"></td></tr>
+<tr><td>Tue Nov 3</td><td>Zorba the Greek paper</td><td class="num">20 pts</td><td class="num"><input class="score" type="number" id="m-zorba" data-name="Zorba the Greek paper" placeholder="–" min="0" max="100" step="0.1" inputmode="decimal" aria-label="Zorba the Greek paper score"></td><td class="num target" id="aim-m-zorba"></td></tr>
+<tr><td>End of week 10</td><td>Research paper<span class="note">About 1,000 words. Confirm the date on Moodle</span></td><td class="num">20 pts</td><td class="num"><input class="score" type="number" id="m-paper" data-name="Research paper" placeholder="–" min="0" max="100" step="0.1" inputmode="decimal" aria-label="Research paper score"></td><td class="num target" id="aim-m-paper"></td></tr>
+<tr><td>End of week 11</td><td>Music blog<span class="note">Confirm the date on Moodle</span></td><td class="num">20 pts</td><td class="num"><input class="score" type="number" id="m-blog" data-name="Music blog" placeholder="–" min="0" max="100" step="0.1" inputmode="decimal" aria-label="Music blog score"></td><td class="num target" id="aim-m-blog"></td></tr>
+</tbody></table></div>
+      <p class="fine">Late work loses 10% per working day, and anything 7 or more working days late is a zero. Each point on any one assignment is worth 0.2 of your final grade.</p>
+    </div>
+    <div>
+      <div class="panel">
+        <h3>Where you stand</h3>
+        
+        <output class="result" id="m-out" aria-live="polite"></output>
+      </div>
+      <div class="panel" id="m-scen-panel">
+        <h3 id="m-scen-title">What you need next</h3>
+        <table class="mini">
+          <thead><tr><th id="m-scen-h1"></th><th id="m-scen-h2"></th></tr></thead>
+          <tbody id="m-scen"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<section class="course py" id="py">
+  <h2>Python 191</h2>
+  <p class="standing" id="y-standing"></p>
+  <div class="grid">
+    <div>
+      <div class="tablebox"><table><thead><tr><th>When</th><th>Assignment</th><th class="num">Worth</th><th class="num">Your score</th><th class="num">Aim for</th></tr></thead><tbody>
+<tr><td>Done</td><td>Quiz 1</td><td class="num">Half of 30</td><td class="num"><input class="score" type="number" id="y-quiz" data-name="Quiz 1" data-default="94" min="0" max="100" step="0.1" inputmode="decimal" aria-label="Quiz 1 score"></td><td class="num target" id="aim-y-quiz"></td></tr>
+<tr><td>Mon Nov 16</td><td>Quiz 2<span class="note">Red: no AI at all</span></td><td class="num">Half of 30</td><td class="num"><input class="score" type="number" id="y-quiz2" data-name="Quiz 2" placeholder="–" min="0" max="100" step="0.1" inputmode="decimal" aria-label="Quiz 2 score"></td><td class="num target" id="aim-y-quiz2"></td></tr>
+<tr><td>End of term</td><td>Final project<span class="note">Orange: AI cannot write content, and any use must be referenced</span></td><td class="num">40 pts</td><td class="num"><input class="score" type="number" id="y-proj" data-name="Final project" placeholder="–" min="0" max="100" step="0.1" inputmode="decimal" aria-label="Final project score"></td><td class="num target" id="aim-y-proj"></td></tr>
+<tr><td>Thu Dec 10</td><td>Final exam<span class="note">13:00 to 15:00 in LAB7. Red: no AI at all</span></td><td class="num">30 pts</td><td class="num"><input class="score" type="number" id="y-exam" data-name="Final exam" placeholder="–" min="0" max="100" step="0.1" inputmode="decimal" aria-label="Final exam score"></td><td class="num target" id="aim-y-exam"></td></tr>
+</tbody></table></div>
+      <p class="fine">Assumes the quiz set is two quizzes of equal weight. If there are more quizzes or they’re weighted differently, ask Professor Viktoratos and I can adjust it.</p>
+    </div>
+    <div>
+      <div class="panel">
+        <h3>Where you stand</h3>
+        
+        <output class="result" id="y-out" aria-live="polite"></output>
+      </div>
+      <div class="panel" id="y-scen-panel">
+        <h3 id="y-scen-title">What you need next</h3>
+        <table class="mini">
+          <thead><tr><th id="y-scen-h1"></th><th id="y-scen-h2"></th></tr></thead>
+          <tbody id="y-scen"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<section class="course gpa" id="gpa">
+  <h2>GPA calculator</h2>
+  <p class="standing" id="g-standing"></p>
+  <div class="grid">
+    <div>
+      <div class="tablebox">
+        <table>
+          <thead><tr><th>Course</th><th class="num">Credits</th><th class="num">Course grade</th><th class="num">Letter</th></tr></thead>
+          <tbody>
+            <tr><td>Chemistry 117</td><td class="num"><input class="score" type="number" id="g-cr-chem" data-default="4" min="0" max="6" step="0.5" inputmode="decimal" aria-label="Chemistry credits"></td><td class="num"><input class="score" type="number" id="g-pct-chem" min="0" max="130" step="0.1" inputmode="decimal" aria-label="Chemistry course grade"></td><td class="num letter" id="g-let-chem"></td></tr>
+            <tr><td>Physics 120</td><td class="num"><input class="score" type="number" id="g-cr-phys" data-default="4" min="0" max="6" step="0.5" inputmode="decimal" aria-label="Physics credits"></td><td class="num"><input class="score" type="number" id="g-pct-phys" min="0" max="130" step="0.1" inputmode="decimal" aria-label="Physics course grade"></td><td class="num letter" id="g-let-phys"></td></tr>
+            <tr><td>Physics 120 lab<span class="note">Graded separately; defaults to your lab average</span></td><td class="num"><input class="score" type="number" id="g-cr-lab" data-default="1" min="0" max="6" step="0.5" inputmode="decimal" aria-label="Physics lab credits"></td><td class="num"><input class="score" type="number" id="g-pct-lab" min="0" max="130" step="0.1" inputmode="decimal" aria-label="Physics lab grade"></td><td class="num letter" id="g-let-lab"></td></tr>
+            <tr><td>Greek Music 120</td><td class="num"><input class="score" type="number" id="g-cr-music" data-default="4" min="0" max="6" step="0.5" inputmode="decimal" aria-label="Greek music credits"></td><td class="num"><input class="score" type="number" id="g-pct-music" min="0" max="130" step="0.1" inputmode="decimal" aria-label="Greek music course grade"></td><td class="num letter" id="g-let-music"></td></tr>
+            <tr><td>Python 191</td><td class="num"><input class="score" type="number" id="g-cr-py" data-default="3" min="0" max="6" step="0.5" inputmode="decimal" aria-label="Python credits"></td><td class="num"><input class="score" type="number" id="g-pct-py" min="0" max="130" step="0.1" inputmode="decimal" aria-label="Python course grade"></td><td class="num letter" id="g-let-py"></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <ul class="scale" aria-label="Grading scale"><li><b>A</b> 95 to 100, 4.0</li><li><b>A−</b> 90 to 94, 3.67</li><li><b>B+</b> 85 to 89, 3.33</li><li><b>B</b> 80 to 84, 3.0</li><li><b>B−</b> 75 to 79, 2.67</li><li><b>C+</b> 70 to 74, 2.33</li><li><b>C</b> 65 to 69, 2.0</li><li><b>F</b> below 65, 0</li></ul>
+      <p class="fine">Leave a course grade blank and it uses your scores above, with everything ungraded set to the number on the right; the grey number shows that projection. Type a grade to override it. Credits come from your syllabi: physics is 4 plus a 1-credit lab, Greek music 4 and Python 3. The chemistry syllabus doesn’t list credits, so 4 is a guess you can change.</p>
+    </div>
+    <div>
+      <div class="panel">
+        <h3>Semester GPA</h3>
+        <label class="field"><span>Assume this score on everything still ungraded</span><input class="score" type="number" id="g-assume" data-default="90" min="0" max="100" step="0.1" inputmode="decimal"></label>
+        <label class="check"><input type="checkbox" id="g-round">Round to the nearest whole number first, so 94.5 counts as an A</label>
+        <output class="result" id="g-out" aria-live="polite"></output>
+      </div>
+      <div class="panel">
+        <h3>Cumulative GPA</h3>
+        <label class="field"><span>GPA before this semester</span><input class="score" type="number" id="g-prev" min="0" max="4" step="0.01" inputmode="decimal" placeholder="Leave blank if this is your first semester"></label>
+        <label class="field"><span>Credits before this semester</span><input class="score" type="number" id="g-prevcr" min="0" max="300" step="1" inputmode="decimal"></label>
+        <output class="result" id="g-cum" aria-live="polite"></output>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<footer>
+  These are estimates from your syllabi and grades. “Aim for” numbers are the even score you’d need on each remaining exam or paper, rounded up to the next tenth so they err on the safe side. Every course uses the same scale, where an A is 95 to 100 and 90 to 94 is an A−, so confirm with each instructor whether a 94.5 rounds up.
+</footer>
+ 
+</div>
+<script>
+(function(){
+  var KEY = 'targets40-scores-v1';
+  var TARGET = 95;
+  var inputs = Array.prototype.slice.call(document.querySelectorAll('input.score, input[type=checkbox]'));
+  var byId = {};
+  inputs.forEach(function(el){ byId[el.id] = el; });
+ 
+  function ceil1(x){ return Math.ceil(x * 10 - 1e-9) / 10; }
+  function r1(x){ return (Math.round(x * 10) / 10).toFixed(1); }
+  function r0(x){ return r1(x).replace(/\.0$/, ''); }
+  function num(id){
+    var el = byId[id];
+    if (!el || el.value === '') { if (el) { el.classList.remove('invalid'); } return null; }
+    var v = parseFloat(el.value), max = parseFloat(el.max);
+    if (isNaN(v) || v < 0 || v > max) { el.classList.add('invalid'); return null; }
+    el.classList.remove('invalid');
+    return v;
+  }
+  function on(id){ return byId[id] ? byId[id].checked : false; }
+  var PH = {
+    'c-m1': ['Midterm 1', 'Midterm 1'], 'c-m2': ['Midterm 2', 'Midterm 2'], 'c-final': ['Final', 'the final'],
+    'p-mid': ['Midterm 1', 'Midterm 1'], 'p-mid2': ['Midterm 2', 'Midterm 2'], 'p-final': ['Final', 'the final'],
+    'm-int': ['Interview', 'the interview'], 'm-nos': ['Never on Sundays', 'the Never on Sundays paper'], 'm-zorba': ['Zorba', 'the Zorba paper'],
+    'm-paper': ['Research paper', 'the research paper'], 'm-blog': ['Blog', 'the blog'],
+    'y-quiz': ['Quiz 1', 'Quiz 1'], 'y-quiz2': ['Quiz 2', 'Quiz 2'], 'y-proj': ['Project', 'the project'], 'y-exam': ['Final', 'the final']
+  };
+  function nameOf(id){ return PH[id] ? PH[id][0] : byId[id].getAttribute('data-name'); }
+  function phraseOf(id){ return PH[id] ? PH[id][1] : nameOf(id); }
+  function listOf(ids){
+    var p = ids.map(phraseOf);
+    if (p.length === 1) { return p[0]; }
+    return p.slice(0, -1).join(', ') + (p.length > 2 ? ',' : '') + ' and ' + p[p.length - 1];
+  }
+  function avg(a){ return a.reduce(function(s, x){ return s + x; }, 0) / a.length; }
+ 
+  // Smallest even score x on every pending item that reaches the target.
+  // Returns >100 if out of reach, <=0 if already covered.
+  function solve(grade, vals, pending){
+    function g(x){
+      var v = Object.assign({}, vals);
+      pending.forEach(function(id){ v[id] = x; });
+      return grade(v);
+    }
+    if (g(100) < TARGET - 1e-9) { return 101; }
+    if (g(0) >= TARGET - 1e-9) { return 0; }
+    var lo = 0, hi = 100;
+    for (var i = 0; i < 60; i++) { var mid = (lo + hi) / 2; if (g(mid) >= TARGET - 1e-9) { hi = mid; } else { lo = mid; } }
+    return hi;
+  }
+  function fmtNeed(need){
+    if (need > 100.0001) { return { text: 'Out of reach', cls: 'out' }; }
+    if (need <= 0) { return { text: 'Covered', cls: 'ok' }; }
+    return { text: ceil1(need).toFixed(1), cls: '' };
+  }
+  function setAim(id, need){
+    var cell = document.getElementById('aim-' + id);
+    if (!cell) { return; }
+    cell.className = 'num target';
+    if (need === 'done') { cell.textContent = 'Done'; cell.classList.add('done'); return; }
+    if (typeof need === 'string') { cell.textContent = need; return; }
+    var f = fmtNeed(need);
+    cell.textContent = f.text;
+    if (f.cls) { cell.classList.add(f.cls); }
+  }
+  function needPhrase(need, where){
+    if (need > 100.0001) { return 'Even 100s on ' + where + ' wouldn’t reach 95.'; }
+    if (need <= 0) { return 'You’ve already locked in a 95.'; }
+    return 'You need about ' + ceil1(need).toFixed(1) + ' on ' + where + ' for a 95.';
+  }
+  function whereOf(pending){
+    return (pending.length === 2 ? 'both ' : pending.length > 2 ? 'each of ' : '') + listOf(pending);
+  }
+ 
+  // Generic course runner
+  function run(c){
+    var vals = {}, pending = [];
+    (c.assumed || []).forEach(function(a){ var v = num(a[0]); vals[a[0]] = v === null ? a[1] : v; if (a[2]) { setAim(a[0], v === null ? a[2] : 'done'); } });
+    c.solveFor.forEach(function(id){ var v = num(id); vals[id] = v; if (v === null) { pending.push(id); } });
+    var need = pending.length ? solve(c.grade, vals, pending) : null;
+    c.project = function(x){ var v = Object.assign({}, vals); pending.forEach(function(id){ v[id] = x; }); return c.grade(v); };
+    c.solveFor.forEach(function(id){ setAim(id, vals[id] === null ? need : 'done'); });
+ 
+    var st = c.intro(vals) + ' ';
+    if (pending.length) { st += needPhrase(need, whereOf(pending)); }
+    else { st += 'Your projected grade is ' + r1(c.grade(vals)) + '.'; }
+    if (c.outro) { st += c.outro(vals, need, pending); }
+    document.getElementById(c.p + '-standing').textContent = st.trim();
+ 
+    var out = document.getElementById(c.p + '-out'), text, cls = '', cap;
+    if (!pending.length) {
+      var g = c.grade(vals); text = r1(g);
+      cap = g >= TARGET ? 'Projected course grade. That’s a 95 or better.' : 'Projected course grade, below 95.';
+    } else if (need > 100.0001) { cls = 'no'; text = 'Out of reach'; cap = 'Even 100s on everything left would not get you to 95 with these scores.'; }
+    else if (need <= 0) { cls = 'ok'; text = 'Already covered'; cap = 'You reach 95 even with zeros on what’s left.'; }
+    else { text = ceil1(need).toFixed(1); cap = 'Score needed on ' + whereOf(pending) + ' to finish at 95.'; }
+    out.innerHTML = '<span class="big ' + cls + '">' + text + '</span><span class="cap">' + cap + '</span>';
+ 
+    // Scenarios for the next pending item
+    var panel = document.getElementById(c.p + '-scen-panel');
+    if (pending.length < 2) { panel.hidden = true; return; }
+    panel.hidden = false;
+    var next = pending[0], rest = pending.slice(1);
+    document.getElementById(c.p + '-scen-title').textContent = 'What ' + phraseOf(next) + ' changes';
+    document.getElementById(c.p + '-scen-h1').textContent = 'If ' + phraseOf(next) + ' is';
+    document.getElementById(c.p + '-scen-h2').textContent = rest.length === 1 ? nameOf(rest[0]) + ' needed' : 'Each of the rest needs';
+    var html = '';
+    [100, 95, 90, 85, 80].forEach(function(s){
+      var v = Object.assign({}, vals); v[next] = s;
+      var f = fmtNeed(solve(c.grade, v, rest));
+      html += '<tr><td>' + s + '</td><td' + (f.cls === 'out' ? ' class="out"' : '') + '>' + f.text + '</td></tr>';
+    });
+    document.getElementById(c.p + '-scen').innerHTML = html;
+  }
+ 
+  var hwIds = [1,2,3,4,5,6,7,8,9].map(function(i){ return 'c-hw' + i; });
+  var courses = [
+    { p: 'c',
+      assumed: hwIds.map(function(id){ return [id, 100, '100']; }),
+      solveFor: ['c-m1', 'c-m2', 'c-final'],
+      grade: function(v){
+        var hw = avg(hwIds.map(function(id){ return v[id]; }));
+        var a = v['c-m1'], b = v['c-m2'], f = v['c-final'];
+        var hi = Math.max(a, b), lo = Math.min(a, b);
+        return 0.17 * hw + 0.25 * hi + 0.25 * Math.max(lo, f) + 0.33 * f;
+      },
+      intro: function(v){
+        var known = hwIds.map(num).filter(function(x){ return x !== null; });
+        var w = 0, s = 0;
+        if (known.length) { w += 0.17; s += 0.17 * avg(known); }
+        [['c-m1', 0.25], ['c-m2', 0.25], ['c-final', 0.33]].forEach(function(e){ if (v[e[0]] !== null) { w += e[1]; s += e[1] * v[e[0]]; } });
+        return w ? 'Graded so far you’re at about ' + r1(s / w) + '%.' : '';
+      },
+      outro: function(v){
+        var lo = Math.min(v['c-m1'] === null ? 101 : v['c-m1'], v['c-m2'] === null ? 101 : v['c-m2']);
+        return lo <= 100 ? ' If your final beats your lower midterm (' + r0(lo) + ' right now), it replaces it, so the final can count for 58%.' : '';
+      } },
+    { p: 'p',
+      assumed: [['p-hw', 95], ['p-quiz', 100], ['p-lab', 95]],
+      solveFor: ['p-mid', 'p-mid2', 'p-final'],
+      grade: function(v){
+        var q = on('p-cap') ? Math.min(v['p-quiz'], 100) : v['p-quiz'];
+        return 0.10 * v['p-hw'] + 0.20 * q + 0.20 * v['p-lab'] + 0.15 * v['p-mid'] + 0.15 * v['p-mid2'] + 0.20 * v['p-final'];
+      },
+      intro: function(v){
+        var q = v['p-quiz'];
+        return 'Your homework average is about ' + r0(v['p-hw']) + ', quizzes ' + r0(q) + (on('p-cap') && q > 100 ? ' (counted as 100)' : '') + ', and lab ' + (num('p-lab') === null ? '95 assumed' : r0(v['p-lab'])) + '.';
+      },
+      outro: function(v, need){
+        return (need > 100.0001 && on('p-cap') && v['p-quiz'] > 100) ? ' Unchecking the quiz cap shows the optimistic case.' : '';
+      } },
+    { p: 'm',
+      solveFor: ['m-int', 'm-nos', 'm-zorba', 'm-paper', 'm-blog'],
+      grade: function(v){ return 0.2 * (v['m-int'] + v['m-nos'] + v['m-zorba'] + v['m-paper'] + v['m-blog']); },
+      intro: function(v){
+        var k = ['m-int', 'm-nos', 'm-zorba', 'm-paper', 'm-blog'].map(function(id){ return v[id]; }).filter(function(x){ return x !== null; });
+        return 'Five graded pieces count 20% each.' + (k.length ? (k.length === 1 ? ' Your graded piece scored ' : ' Your ' + k.length + ' graded pieces average ') + r0(avg(k)) + '.' : '');
+      } },
+    { p: 'y',
+      solveFor: ['y-quiz', 'y-quiz2', 'y-proj', 'y-exam'],
+      grade: function(v){ return 0.30 * (v['y-quiz'] + v['y-quiz2']) / 2 + 0.40 * v['y-proj'] + 0.30 * v['y-exam']; },
+      intro: function(v){
+        var q = [v['y-quiz'], v['y-quiz2']].filter(function(x){ return x !== null; });
+        return q.length ? 'Your quiz set average is ' + r0(avg(q)) + ' so far.' : '';
+      },
+      outro: function(v, need, pending){ return pending.indexOf('y-proj') > -1 ? ' The project is worth the most per point, so it’s the best lever.' : ''; } }
+  ];
+ 
+  // Timeline
+  function pad(n){ return (n < 10 ? '0' : '') + n; }
+  var now = new Date();
+  var today = now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate());
+  var anchors = { chem: '#chem', phys: '#phys', music: '#music', py: '#py' };
+  function timeline(){
+    document.querySelectorAll('.timeline li').forEach(function(li){
+      var d = li.getAttribute('data-date'), past = d < today;
+      var aim = li.querySelector('.aim'), sid = li.getAttribute('data-score');
+      li.classList.toggle('today', d === today);
+      li.classList.toggle('past', past);
+      if (!sid) { li.hidden = past; return; }
+      var v = num(sid);
+      li.hidden = past && v !== null;
+      aim.className = 'aim';
+      if (v !== null) { aim.classList.add('scored'); aim.innerHTML = r0(v) + '<small>your score</small>'; }
+      else if (past) { aim.innerHTML = '<a href="' + anchors[li.getAttribute('data-course')] + '">Add your score</a>'; }
+      else {
+        var cell = document.getElementById('aim-' + sid), t = cell ? cell.textContent : '';
+        if (t === 'Out of reach') { aim.classList.add('out'); }
+        aim.textContent = t;
+      }
+    });
+  }
+ 
+  var SCALE = [[95, 'A', 4.0], [90, 'A−', 3.67], [85, 'B+', 3.33], [80, 'B', 3.0], [75, 'B−', 2.67], [70, 'C+', 2.33], [65, 'C', 2.0], [-1, 'F', 0]];
+  function letter(pct){
+    var p = on('g-round') ? Math.round(pct) : pct;
+    for (var i = 0; i < SCALE.length; i++) { if (p >= SCALE[i][0] - 1e-9) { return SCALE[i]; } }
+    return SCALE[SCALE.length - 1];
+  }
+  function gpa(){
+    var assume = num('g-assume'); if (assume === null) { assume = 90; }
+    var byP = {}; courses.forEach(function(c){ byP[c.p] = c; });
+    var lab = num('p-lab');
+    var rows = [['chem', byP.c.project(assume)], ['phys', byP.p.project(assume)], ['lab', lab === null ? 95 : lab], ['music', byP.m.project(assume)], ['py', byP.y.project(assume)]];
+    var pts = 0, cr = 0, below = [];
+    rows.forEach(function(r){
+      var k = r[0];
+      byId['g-pct-' + k].placeholder = r1(r[1]);
+      var typed = num('g-pct-' + k), pct = typed === null ? r[1] : typed;
+      var credits = num('g-cr-' + k); if (credits === null) { credits = 0; }
+      var L = letter(pct);
+      var lc = document.getElementById('g-let-' + k);
+      lc.innerHTML = L[1] + '<span class="note">' + L[2].toFixed(2) + ' points</span>'; lc.className = 'num letter' + (L[1] === 'A' ? ' a' : '');
+      pts += L[2] * credits; cr += credits;
+      if (L[1] !== 'A' && credits > 0) { below.push(k); }
+    });
+    var g = cr ? pts / cr : 0;
+    var names = { chem: 'chemistry', phys: 'physics', lab: 'the physics lab', music: 'Greek music', py: 'Python' };
+    document.getElementById('g-out').innerHTML = '<span class="big' + (g >= 3.995 ? '' : '') + '">' + g.toFixed(2) + '</span><span class="cap">Semester GPA over ' + r0(cr) + ' credits.</span>';
+    var st = 'With ' + r0(assume) + ' on everything still ungraded, your semester GPA would be ' + g.toFixed(2) + '. ';
+    if (!below.length) { st += 'That’s an A in every course.'; }
+    else { st += 'Short of an A: ' + below.map(function(k){ return names[k]; }).join(', ') + '. Each A− instead of an A costs about ' + (cr ? (0.33 * 4 / cr).toFixed(2) : '0') + ' for a 4-credit course.'; }
+    document.getElementById('g-standing').textContent = st;
+    var prev = num('g-prev'), prevcr = num('g-prevcr'), cum = document.getElementById('g-cum');
+    if (prev !== null && prevcr) {
+      var cg = (prev * prevcr + pts) / (prevcr + cr);
+      cum.innerHTML = '<span class="big">' + cg.toFixed(2) + '</span><span class="cap">Cumulative GPA over ' + r0(prevcr + cr) + ' credits.</span>';
+    } else {
+      cum.innerHTML = '<span class="cap">Enter your GPA and credits so far to see your cumulative GPA.</span>';
+    }
+  }
+ 
+  function recalc(){ courses.forEach(run); timeline(); gpa(); }
+ 
+  // Storage
+  var statusEl = document.getElementById('status');
+  function save(){
+    var data = {};
+    try { data = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { data = {}; }
+    inputs.forEach(function(el){ data[el.id] = el.type === 'checkbox' ? (el.checked ? '1' : '0') : el.value; });
+    try { localStorage.setItem(KEY, JSON.stringify(data)); statusEl.textContent = 'Saved in this browser.'; }
+    catch (e) { statusEl.textContent = 'Couldn’t save here, so scores will reset when you close the page.'; }
+  }
+  function applyDefaults(){
+    inputs.forEach(function(el){
+      var d = el.getAttribute('data-default');
+      if (el.type === 'checkbox') { el.checked = d === '1'; } else { el.value = d === null ? '' : d; }
+    });
+  }
+  function load(){
+    applyDefaults();
+    var data = null;
+    try { data = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) { data = null; }
+    if (!data) { return; }
+    inputs.forEach(function(el){
+      if (!(el.id in data)) { return; }
+      if (el.type === 'checkbox') { el.checked = data[el.id] === '1'; } else { el.value = data[el.id]; }
+    });
+  }
+  inputs.forEach(function(el){
+    el.addEventListener('input', function(){ recalc(); save(); });
+    el.addEventListener('change', function(){ recalc(); save(); });
+  });
+  document.getElementById('reset').addEventListener('click', function(){
+    if (!window.confirm('Clear the scores you’ve entered and go back to the Nov 3 grades?')) { return; }
+    try { localStorage.removeItem(KEY); } catch (e) {}
+    applyDefaults(); recalc();
+    statusEl.textContent = 'Reset to the Nov 3 grades.';
+  });
+ 
+  load();
+  recalc();
+})();
+</script>
+</body>
+</html>
+ 
